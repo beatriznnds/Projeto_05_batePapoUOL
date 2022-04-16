@@ -18,23 +18,36 @@
     </div>
     <div class="container">
         <div class="mensagem-status">
-
         </div>
         <div class="mensagem-normais">
-
         </div>
         <div class="mensagem-reservada">
- 
+            <p class="horario">
+                <span>(09:22:48)                  
+                </span>
+            </p>
+            <p class="mensagem-usuario">
+                <span>João</span>
+            </p>
+            <p class="status-usuario">
+                <span>reservadamente para </span>
+            </p>
+            <p class="mensagem-usuario">
+                <span>Maria:</span>
+            </p>
+            <p class="status-usuario">
+                <span>Oi gatinha quer tc?</span>
+            </p>
         </div>
     </div>
     <div class="rodape">
-        <input type="text" placeholder="Escreva aqui..." />
-        <button type="button">
+        <input class="texto-mensagem" type="text" placeholder="Escreva aqui..." />
+        <button type="button" onclick="enviarMensagem(this)">
             <img src="img/Vector(1).png" />
         </button>
     </div>
-
-    <script src=""></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

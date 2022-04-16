@@ -22,28 +22,55 @@
     font-family: 'Roboto';
     font-size: 14px;
     line-height: 16px;
+    padding-top: 20px;
 }
 
-.mensagem-status {
-    background-color: #AAAAAA;
-    border-radius: 2px;
+.container div {
+    display: flex;
+    align-items: center;
     height: auto;
+    padding: 15px 0;
+    margin-top: 5px;
 }
+
+
+.mensagem-status {
+    padding: 5px;
+    background-color: #AAAAAA;
+    border-radius: 2px;    
+}
+
+.horario {
+   color: #000000;
+   opacity: 0.3;
+   padding-left: 10px;
+}
+
 
 .mensagem-usuario {
     font-weight: bold;
+    padding-left: 5px;
 }
 
 .mensagem-normais {
     background-color: #FFFFFF;
     border-radius: 2px;
-    height: auto;
+    height: 20px;
+    padding-left: 5px;
+    display: flex;
+
 }
 
 .mensagem-reservada {
     background-color: #FFDEDE;
     border-radius: 2px;
     height: auto;
+    padding-left: 5px;
+
+}
+
+.status-usuario {
+    padding-left: 5px;
 }
 
 .rodape {
