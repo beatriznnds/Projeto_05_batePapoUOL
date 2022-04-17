@@ -34,10 +34,24 @@
 }
 
 
-.mensagem-status {
-    padding: 5px;
+.box {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-y: auto;
+}
+
+.mensagens-status {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    width: 375px;
+    max-height: 20px;
     background-color: #AAAAAA;
-    border-radius: 2px;    
+    border-radius: 2px; 
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
 .horario {
@@ -58,8 +72,8 @@
     height: 20px;
     padding-left: 5px;
     display: flex;
-
 }
+
 
 .mensagem-reservada {
     background-color: #FFDEDE;
