@@ -13,7 +13,11 @@ function pedirNome () {
         name: nome
     }
     const promiseNome = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', nomeUsuario);
-    promiseNome.then(mensagemStatus);
+    promiseNome.then(res => {
+        mensagemStatus();
+        setInterval(manterConexao, 5000);
+        setInterval(mensagemStatus, 3000);
+    });
     promiseNome.catch(ErroNome);
 }
 
@@ -28,28 +32,43 @@ pedirNome();
 function mensagemStatus () {
     const promiseStatus = axios.get(`${enderecoAPI}messages`);
     promiseStatus.then(res => {
-        mensagensStatus = document.querySelector(".box");
-        mensagensStatus.innerHTML = "";
+        mensagens= document.querySelector(".box");
+        mensagens.innerHTML = "";
         for (let i=0; i < res.data.length; i++) {
-            mensagensStatus.innerHTML += `
-                <div class="box">
-                    <div class="mensagem-status>
-                        <p class="horario">
-                            <span>(${res.data[i].time})</span>            
-                        </p>
-                        <p class="mensagem-usuario">
-                            <span>${res.data[i].from}</span>
-                        </p>
-                        <p class="status-usuario">
-                            <span>entra na sala...</span>
-                        </p>
-                </div>
+            if (res.data[i].type === "status") {
+                mensagens.innerHTML += `
+                <div class="mensagens-status">
+                    <p>
+                        <span class="horario">(${res.data[i].time})</span>            
+                        <span class="mensagem-usuario">${res.data[i].from}</span>
+                        <span class="status-usuario">entra na sala...</span>
+                    </p>
                 </div>`
+            } if (res.data[i].type === "message") {
+                mensagens.innerHTML += `
+                <div class="mensagem-normais">
+                    <p class="horario">
+                        <span>(${res.data[i].time})              
+                        </span>
+                    </p>
+                    <p class="mensagem-usuario">
+                        <span>${res.data[i].from}</span>
+                    </p>
+                    <p class="status-usuario">
+                        <span>para</span>
+                    </p>
+                    <p class="mensagem-usuario">
+                        <span>${res.data[i].to}:</span>
+                    </p>
+                    <p class="status-usuario">
+                        <span>${res.data[i].text}</span>
+                    </p>
+                </div>`
+            }
         }
+        let ultimaMensagem = mensagens.lastChild;
+        ultimaMensagem.scrollIntoView();
     })
-
-    let ultimaMensagem = mensagensStatus.lastChild;
-    ultimaMensagem.scrollIntoView();
 }
 
 
@@ -57,7 +76,6 @@ mensagemStatus();
 
 function manterConexao () {
     const promiseConexao = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', nomeUsuario);
-
 }
 
 function procurarParticipantes () {
@@ -67,36 +85,6 @@ function procurarParticipantes () {
 
 procurarParticipantes();
 
-function carregarMensagens () {
-    const promiseMensagens = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
-    promiseMensagens.then (res => {
-        mensagensChat = document.querySelector(".mensagem-normais");
-        mensagensChat.innerHTML = "";
-        for (let i=0; i < res.data.length; i++) {
-            mensagensChat.innerHTML += `
-            <div class="mensagem-normais">
-                <p class="horario">
-                    <span>${resposta.data[i].time}                
-                    </span>
-                </p>
-                <p class="mensagem-usuario">
-                    <span>${resposta.data[i].name}</span>
-                </p>
-                <p class="status-usuario">
-                    <span>para</span>
-                </p>
-                <p class="mensagem-usuario">
-                    <span>${resposta.data[i].for}</span>
-                </p>
-                <p class="status-usuario">
-                    <span>${resposta.data[i].text}</span>
-                </p>
-            </div>`
-        }
-    })
-}
-
-carregarMensagens();
 
 function enviarMensagem () {
     mensagemEnviar = {
@@ -106,17 +94,8 @@ function enviarMensagem () {
         type: "message",
     }
     const promiseEnvio = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', mensagemEnviar);
-    promiseEnvio.then(carregarChat);
+    document.querySelector(".texto-mensagem").value = "";
+    promiseEnvio.then(mensagemStatus);
 }
 
-enviarMensagem();
 
-
-function iniciarChat () {
-    pedirNome();
-    manterConexao();
-    procurarParticipantes();
-    carregarMensagens();
-    enviarMensagem();
-    setTimeout(iniciarChat, 5000);
-}
